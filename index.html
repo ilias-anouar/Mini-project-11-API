@@ -1,28 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+        crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Lobster&family=Nunito:wght@300;400;500;600;700;800;900;1000&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <script src="Script.js" defer></script>
     <title>Cooking recipes</title>
 </head>
+
 <body>
     <section class="card">
-        <img src="/IMG/imag.jpg" class="card-img" alt="section img">
-        <div class="card-img-overlay m-5 p-5">
-            <h1 class="card-title display-1 text-center text-white font-monospace fw-bolder">Cooking recipes</h1>
-            <div class="input-group input-group-lg">
-                <button type="button" class="btn btn-lg btn-light"><i class="bi bi-search"></i></button>
-                <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg">
-             </div>
+        <img src="/IMG/imag.jpg" class="card-img w-100" alt="section img">
+        <div class="card-img-overlay m-5">
+            <a type="button" href="filter.html" class="btn btn-lg btn-outline-warning">Filtration</a>
+            <h1 class="card-title display-1 text-center text-black fw-bolder pb-5">Cooking recipes</h1>
+            <div class="input-group input-group-lg ps-5 pe-5">
+                <button id="buttonsearch" type="button" class="btn btn-lg btn-warning" ><i class="bi bi-search"></i></button>
+                <input id="inputserach" type="text" class="form-control" aria-label="Sizing example input"
+                    aria-describedby="inputGroup-sizing-lg" aria-placeholder="Searche recipes">
+            </div>
         </div>
     </section>
-    <section>
-
+    <section id="recipes" class="p-5">
+        <div id="recipes-group" class="row row-cols-1 row-cols-md-3 g-4">
+        </div>
     </section>
+    <div class="modal fade" id="modal">
+        <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+            <div class="card mb-3">
+                <div class="row g-0">
+                    <div class="col-md-4">
+                        <img id="img-modal" src="#" class="img-fluid rounded-start" alt="image detels">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 id="rec-title" class="card-title"></h5>
+                            <p id="rec-cat-reg" class="card-text"></p>
+                            <p id="rec-ing" class="card-text"></p>
+                            <p id="rec-pre" class="card-text"></p>
+                            <a id="video" href="" class="text-danger list-group-item fw-bold">Video</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
+
 </html>
