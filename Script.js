@@ -151,3 +151,69 @@ function modale(that) {
     })
     .then((json) => fillmodal(json.meals[0]));
 }
+
+/**
+ * to search :
+ * * input value => by click event
+ * * add function to slice array of values => after API fetch()
+ * * creat cards for each page
+ */
+
+function paginate(array, page_size, page_number) {
+  let data = array.slice(
+    (page_number - 1) * page_size,
+    page_number * page_size
+  );
+  let pages = Math.ceil(array.length / page_number);
+  return {
+    data: data,
+    pages: pages,
+  };
+}
+
+function buttonpage(page, pagina) {
+  let arra = paginate(pagina.array, pagina.size, pagina.number);
+  let pagination_numbers = document.getElementById("pagin-num");
+  pagination_numbers.innerHTML = "";
+  for (let i = 1; i <= page; i++) {
+    pagination_numbers.innerHTML += `<li class="page-item"><a class="page-link text-black" >${i}</a></li>`;
+  }
+  let btn_pagination = pagination_numbers.querySelectorAll(".page-item");
+  for (let i = 0; i < btn_pagination.length; i++) {
+    btn_pagination[i].addEventListener("click", function () {
+      inputsearch.value = "";
+      pagina.number = Number(btn_pagination[i].innerText);
+      createtr(arra.data);
+      buttonpage(arra.pages);
+    });
+  }
+}
+
+buttonsearch.addEventListener("click", function () {
+  recipesgroup.innerHTML = "";
+
+  fetch(
+    `https://www.themealdb.com/api/json/v1/1/search.php?s=${inputsearch.value}`
+  )
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(`HTTP error: ${response.status}`);
+      }
+      return response.json();
+    })
+    .then((json) => search(json.meals));
+});
+
+function search(json) {
+  let pages = { array: [], size: 6, number: 1 };
+  pages.array.push(json);
+  console.log(pages.array);
+  for (let i = 0; i < pages.array.length; i++) {
+    let creat = pages.array[i];
+    for (let j = 0; j < creat.length; j++) {
+      let arra = paginate(pages.array, pages.size, pages.number);
+      creatcard(arra.data);
+      buttonpage(arra.pages, pages);
+    }
+  }
+}
