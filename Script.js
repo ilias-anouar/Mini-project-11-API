@@ -38,9 +38,9 @@ function creatcard(obj) {
   h5.setAttribute("class", "card-title");
   p.setAttribute("class", "card-text");
   button.setAttribute("type", "button");
-    button.setAttribute("class", "btn btn-lg btn-outline-warning");
-    button.setAttribute("data-bs-toggle", "modal")
-    button.setAttribute('data-bs-target', "#modal" )
+  button.setAttribute("class", "btn btn-lg btn-outline-warning");
+  button.setAttribute("data-bs-toggle", "modal");
+  button.setAttribute("data-bs-target", "#modal");
   button.setAttribute("onclick", "modale(this)");
   button.innerText = "Details";
   // set the content of each elements
@@ -87,16 +87,36 @@ window.addEventListener("DOMContentLoaded", function () {
 // function to creat ingre & mesu
 
 function IngMes(json) {
-  let result;
-  for (let i = 0; i < json.length; i++) {
-    if (json[`strIngredient${i}`] == "") {
-      return false;
+  let ul, li;
+  let mesur = [];
+  let ingre = [];
+  for (let i = 1; i <= 20; i++) {
+    if (json[`strMeasure${i}`] != "") {
+      mesur.push(json[`strMeasure${i}`]);
     } else {
-      result += `strIngredient${i}`;
+      break;
     }
   }
-  return result;
+
+  for (let i = 1; i <= 20; i++) {
+    if (json[`strIngredient${i}`] != "") {
+      ingre.push(json[`strIngredient${i}`]);
+    } else {
+      break;
+    }
+  }
+  ul = document.createElement("ul");
+  ul.setAttribute("class", "d-flex flex-wrap gap-3 list-group-numbered");
+  for (let i = 0; i < ingre.length; i++) {
+    li = document.createElement("li");
+    li.setAttribute("class", "list-group-item");
+    li.innerHTML = `${ingre[i]} : ${mesur[i]}`;
+    ul.appendChild(li);
+  }
+  return ul;
 }
+
+// to add content to modal elements
 
 function fillmodal(json) {
   // variables to use => html elements to fill
@@ -112,9 +132,10 @@ function fillmodal(json) {
   image.src = json["strMealThumb"];
   title.innerHTML = json["strMeal"];
   CatReg.innerHTML = `${json["strCategory"]}, ${json["strArea"]}`;
-    ingre.innerHTML = IngMes(json);
-    prepa.innerHTML = json["strInstructions"];
-    video.href = json["strYoutube"];
+  ingre.innerHTML = "";
+  ingre.appendChild(IngMes(json));
+  prepa.innerHTML = json["strInstructions"];
+  video.href = json["strYoutube"];
 }
 
 function modale(that) {
