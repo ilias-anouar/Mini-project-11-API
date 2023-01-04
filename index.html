@@ -27,30 +27,34 @@
             <a type="button" href="filter.html" class="btn btn-lg btn-outline-warning">Filtration</a>
             <h1 class="card-title display-1 text-center text-black fw-bolder pb-5">Cooking recipes</h1>
             <div class="input-group input-group-lg ps-5 pe-5">
-                <button id="buttonsearch" type="button" class="btn btn-lg btn-warning" ><i class="bi bi-search"></i></button>
+                <button id="buttonsearch" type="button" class="btn btn-lg btn-warning"><i
+                        class="bi bi-search"></i></button>
                 <input id="inputserach" type="text" class="form-control" aria-label="Sizing example input"
                     aria-describedby="inputGroup-sizing-lg" aria-placeholder="Searche recipes">
             </div>
         </div>
     </section>
     <section id="recipes" class="p-5">
-        <div id="recipes-group" class="row row-cols-1 row-cols-md-3 g-4">
-        </div>
+        <div id="recipes-group" class="row row-cols-1 row-cols-md-3 g-4"></div>
     </section>
-    <div class="modal fade" id="modal">
+    <div class="modal fade " id="modal">
         <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
-            <div class="card mb-3">
-                <div class="row g-0">
-                    <div class="col-md-4">
-                        <img id="img-modal" src="#" class="img-fluid rounded-start" alt="image detels">
-                    </div>
-                    <div class="col-md-8">
-                        <div class="card-body">
-                            <h5 id="rec-title" class="card-title"></h5>
-                            <p id="rec-cat-reg" class="card-text"></p>
-                            <p id="rec-ing" class="card-text"></p>
-                            <p id="rec-pre" class="card-text"></p>
-                            <a id="video" href="" class="text-danger list-group-item fw-bold">Video</a>
+            <div class="modal-content modal-content-scrollable">
+                <div class="card p-2">
+                    <div class="row g-1">
+                        <div class="col-md-4">
+                            <img id="img-modal" src="#" class="img-fluid rounded-start" alt="image detels">
+                        </div>
+                        <div class="col-md-8 p-2">
+                            <div class="card-body">
+                                <h5 id="rec-title" class="card-title"></h5>
+                                <p id="rec-cat-reg" class="card-text"></p>
+                                <h5>Ingredients</h5>
+                                <div id="rec-ing" class="card-text"></div>
+                                <h5>Instructions</h5>
+                                <p id="rec-pre" class="card-text"></p>
+                                <a id="video" role="button" href="#" target="_blank" class="btn btn-lg btn-outline-danger fw-bold">Video</a>
+                            </div>
                         </div>
                     </div>
                 </div>
