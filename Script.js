@@ -164,15 +164,15 @@ function paginate(array, page_size, page_number) {
     (page_number - 1) * page_size,
     page_number * page_size
   );
-  let pages = Math.ceil(array.length / page_number);
+  let pages = Math.ceil(array.length / page_size);
   return {
     data: data,
     pages: pages,
   };
 }
 
-function buttonpage(page, pagina) {
-  let arra = paginate(pagina.array, pagina.size, pagina.number);
+function buttonpage(page, array, size, number) {
+  let arra = paginate(array, size, number);
   let pagination_numbers = document.getElementById("pagin-num");
   pagination_numbers.innerHTML = "";
   for (let i = 1; i <= page; i++) {
@@ -182,8 +182,8 @@ function buttonpage(page, pagina) {
   for (let i = 0; i < btn_pagination.length; i++) {
     btn_pagination[i].addEventListener("click", function () {
       inputsearch.value = "";
-      pagina.number = Number(btn_pagination[i].innerText);
-      createtr(arra.data);
+      number = Number(btn_pagination[i].innerText);
+      creatcard(arra.data);
       buttonpage(arra.pages);
     });
   }
@@ -211,9 +211,10 @@ function search(json) {
   for (let i = 0; i < pages.array.length; i++) {
     let creat = pages.array[i];
     for (let j = 0; j < creat.length; j++) {
-      let arra = paginate(pages.array, pages.size, pages.number);
+      let arra = paginate(creat, 6, 1);
+      console.log(arra);
       creatcard(arra.data);
-      buttonpage(arra.pages, pages);
+      buttonpage(arra.pages, creat, 6, 1);
     }
   }
 }
