@@ -215,36 +215,26 @@ function displayPage(pageNum, items) {
 
 let buttonfilter = document.getElementById("filter");
 
-buttonfilter.addEventListener("click", function () {
-  showresult.innerHTML = "";
+buttonfilter.addEventListener("click", async function () {
+    showresult.innerHTML = ""
   let catid = [];
   let areaid = [];
-  fetchareaJSON().then((json) =>
-    json.meals.forEach((meal) => {
-      areaid.push(meal["idMeal"]);
-    })
-  );
-  fetchcatJSON().then((json) =>
-    json.meals.forEach((meal) => {
-      catid.push(meal["idMeal"]);
-    })
-  );
-  console.log(areaid);
-  console.log(catid);
-});
-
-async function fetchcatJSON() {
-  const response = await fetch(
+  const response1 = await fetch(
     `https://www.themealdb.com/api/json/v1/1/filter.php?c=${Category.value}`
   );
-  const category = await response.json();
-  return category;
-}
-
-async function fetchareaJSON() {
-  const response = await fetch(
+  const category = await response1.json();
+  category.meals.forEach((element) => {
+    catid.push(element.idMeal);
+  });
+  const response2 = await fetch(
     `https://www.themealdb.com/api/json/v1/1/filter.php?a=${Area.value}`
   );
-  const area = await response.json();
-  return area;
-}
+  const area = await response2.json();
+  area.meals.forEach((element) => {
+    areaid.push(element.idMeal);
+  });
+  let intersection = areaid.filter(function (e) {
+    return catid.indexOf(e) > -1;
+  });
+  console.log(intersection);
+});
