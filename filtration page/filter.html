@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Lobster&family=Nunito:wght@300;400;500;600;700;800;900;1000&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="/search page/style.css">
+    <script src="script.js" defer></script>
+    <title>Cooking recipes</title>
+</head>
+
+<body>
+    <a type="button" href="/search page/index.html"
+        class="btn btn-lg btn-outline-warning border-5 display-1 fw-bolder m-3">Searche</a><br>
+    <section id="filtret" class="d-flex gap-3 p-5">
+        <select id="area" class="form-select form-select-lg" aria-label=".form-select-lg">
+            <option selected>Area</option>
+            <option value="American">American</option>
+            <option value="British">British</option>
+            <option value="Canadian">Canadian</option>
+            <option value="Chinese">Chinese</option>
+            <option value="Croatian">Croatian</option>
+            <option value="Dutch">Dutch</option>
+            <option value="Egyptian">Egyptian</option>
+            <option value="French">French</option>
+            <option value="Greek">Greek</option>
+            <option value="Indian">Indian</option>
+            <option value="Irish">Irish</option>
+            <option value="Italian">Italian</option>
+            <option value="Jamaican">Jamaican</option>
+            <option value="Japanese">Japanese</option>
+            <option value="Kenyan">Kenyan</option>
+            <option value="Malaysian">Malaysian</option>
+            <option value="Mexican">Mexican</option>
+            <option value="Moroccan">Moroccan</option>
+            <option value="Polish">Polish</option>
+            <option value="Portuguese">Portuguese</option>
+            <option value="Spanish">Spanish</option>
+            <option value="Thai">Thai</option>
+            <option value="Tunisian">Tunisian</option>
+            <option value="Turkish">Turkish</option>
+            <option value="Unknown">Unknown</option>
+            <option value="Vietnamese">Vietnamese</option>
+        </select>
+        <select id="category" class="form-select form-select-lg" aria-label=".form-select-lg">
+            <option selected>Category</option>
+            <option value="Beef">Beef</option>
+            <option value="Chicken">Chicken</option>
+            <option value="Lamb">Lamb</option>
+            <option value="Pasta">Pasta</option>
+            <option value="Pork">Pork</option>
+            <option value="Seafood">Seafood</option>
+            <option value="Side">Side</option>
+            <option value="Starter">Starter</option>
+            <option value="Vegan">Vegan</option>
+            <option value="Vegetarian">Vegetarian</option>
+            <option value="Breakfast">Breakfast</option>
+            <option value="Goat">Goat</option>
+        </select>
+        <button id="filter" type="button" class="btn btn-lg btn-outline-warning border-5 display-1 fw-bolder">Filter</button>
+    </section>
+    <section class="p-5">
+        <div id="showresult" class="row row-cols-1 row-cols-md-3 g-4">
+
+        </div>
+    </section>
+    <div class="modal fade " id="modal">
+        <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content modal-content-scrollable">
+                <div class="card p-2">
+                    <div class="row g-1">
+                        <div class="col-md-4">
+                            <img id="img-modal" src="#" class="img-fluid rounded-start" alt="image detels">
+                        </div>
+                        <div class="col-md-8 p-2">
+                            <div class="card-body">
+                                <h5 id="rec-title" class="card-title"></h5>
+                                <p id="rec-cat-reg" class="card-text"></p>
+                                <h5>Ingredients</h5>
+                                <div id="rec-ing" class="card-text"></div>
+                                <h5>Instructions</h5>
+                                <p id="rec-pre" class="card-text"></p>
+                                <a id="video" role="button" href="#" target="_blank"
+                                    class="btn btn-lg btn-outline-danger fw-bold">Video</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

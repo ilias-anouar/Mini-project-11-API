@@ -159,33 +159,57 @@ function modale(that) {
  * * creat cards for each page
  */
 
-function paginate(array, page_size, page_number) {
-  let data = array.slice(
-    (page_number - 1) * page_size,
-    page_number * page_size
-  );
-  let pages = Math.ceil(array.length / page_size);
-  return {
-    data: data,
-    pages: pages,
-  };
+// Number of items to display per page
+const itemsPerPage = 6;
+
+// Get the total number of pages
+function pagenum(items) {
+  const numPages = Math.ceil(items.length / itemsPerPage);
+  return numPages;
 }
 
-function buttonpage(page, array, size, number) {
-  let arra = paginate(array, size, number);
-  let pagination_numbers = document.getElementById("pagin-num");
-  pagination_numbers.innerHTML = "";
-  for (let i = 1; i <= page; i++) {
-    pagination_numbers.innerHTML += `<li class="page-item"><a class="page-link text-black" >${i}</a></li>`;
+// Split the items into pages
+function pages(items) {
+  const pages = [];
+  for (let i = 0; i < pagenum(items); i++) {
+    pages.push(items.slice(i * itemsPerPage, (i + 1) * itemsPerPage));
   }
-  let btn_pagination = pagination_numbers.querySelectorAll(".page-item");
-  for (let i = 0; i < btn_pagination.length; i++) {
-    btn_pagination[i].addEventListener("click", function () {
-      inputsearch.value = "";
-      number = Number(btn_pagination[i].innerText);
-      creatcard(arra.data);
-      buttonpage(arra.pages);
+  return pages;
+}
+
+// Create the buttons or links for each page
+function button(items) {
+  let nav = document.getElementById("pagin-num");
+  nav.innerHTML = ""
+  for (let i = 0; i < pagenum(items); i++) {
+    const li = document.createElement("li");
+    li.setAttribute("class", "page-item");
+    const a = document.createElement("a");
+    a.setAttribute("class", "page-link");
+    a.innerHTML = i + 1;
+    li.appendChild(a);
+    a.addEventListener("click", () => {
+      let activremov = document.querySelectorAll("li");
+      activremov.forEach((e) => {
+        e.classList.remove("active");
+      });
+      li.setAttribute("class", "active");
+      // Display the appropriate page when the button is clicked
+      displayPage(i, items);
     });
+    nav.appendChild(li);
+  }
+}
+
+function displayPage(pageNum, items) {
+  // Clear the current page
+  const pageContainer = document.getElementById("recipes-group");
+  pageContainer.innerHTML = "";
+
+  // Display the items for the current page
+  const page = pages(items)[pageNum];
+  for (const item of page) {
+    creatcard(item);
   }
 }
 
@@ -205,16 +229,7 @@ buttonsearch.addEventListener("click", function () {
 });
 
 function search(json) {
-  let pages = { array: [], size: 6, number: 1 };
-  pages.array.push(json);
-  console.log(pages.array);
-  for (let i = 0; i < pages.array.length; i++) {
-    let creat = pages.array[i];
-    for (let j = 0; j < creat.length; j++) {
-      let arra = paginate(creat, 6, 1);
-      console.log(arra);
-      creatcard(arra.data);
-      buttonpage(arra.pages, creat, 6, 1);
-    }
-  }
+  pages(json);
+  button(json);
+  displayPage(0, json);
 }
