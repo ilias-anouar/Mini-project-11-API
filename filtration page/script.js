@@ -203,7 +203,7 @@ function button(items) {
 
 function displayPage(pageNum, items) {
   // Clear the current page
-  const pageContainer = document.getElementById("recipes-group");
+  const pageContainer = document.getElementById("showresult");
   pageContainer.innerHTML = "";
 
   // Display the items for the current page
@@ -216,7 +216,7 @@ function displayPage(pageNum, items) {
 let buttonfilter = document.getElementById("filter");
 
 buttonfilter.addEventListener("click", async function () {
-    showresult.innerHTML = ""
+  showresult.innerHTML = "";
   let catid = [];
   let areaid = [];
   const response1 = await fetch(
@@ -237,4 +237,26 @@ buttonfilter.addEventListener("click", async function () {
     return catid.indexOf(e) > -1;
   });
   console.log(intersection);
+  let result = [];
+  for (let i = 0; i < intersection.length; i++) {
+    console.log(intersection[i]);
+    const idfitch = await fetch(
+      `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${intersection[i]}`
+    );
+    const response = await idfitch.json();
+    result.push(response.meals[0]);
+  }
+  if (result.length >= 1) {
+    pages(result);
+    button(result);
+    displayPage(0, result);
+  } else {
+    let alert = document.getElementById("alert");
+    alert.innerHTML = `<div class="alert alert-danger d-flex align-items-center" role="alert">
+  <svg class="bi flex-shrink-0 me-2" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill"/></svg>
+  <div>
+    NO RESULTS
+  </div>
+</div>`;
+  }
 });
