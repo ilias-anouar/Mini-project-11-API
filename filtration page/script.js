@@ -65,18 +65,38 @@ function creatcard(obj) {
  * * creat for each object card
  */
 
-window.addEventListener("DOMContentLoaded", function () {
-  for (let i = 0; i < 6; i++) {
-    fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?c=Lamb`)
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error(`HTTP error: ${response.status}`);
-        }
-        return response.json();
-      })
-      .then((json) => creatcard(json.meals[0]))
-      .catch((err) => console.error(`Fetch problem: ${err.message}`));
+window.addEventListener("DOMContentLoaded", async function () {
+  let lambid = [];
+  let moroccoid = [];
+  const lamb = await fetch(
+    `https://www.themealdb.com/api/json/v1/1/filter.php?c=Lamb`
+  );
+  const resultlamb = await lamb.json();
+  resultlamb.meals.forEach((element) => {
+    lambid.push(element.idMeal);
+  });
+  const morocco = await fetch(
+    `https://www.themealdb.com/api/json/v1/1/filter.php?c=Lamb`
+  );
+  const resultmor = await morocco.json();
+  resultmor.meals.forEach((element) => {
+    moroccoid.push(element.idMeal);
+  });
+  let match = lambid.filter(function (e) {
+    return moroccoid.indexOf(e) > -1;
+  });
+  let result = [];
+  for (let i = 0; i < match.length; i++) {
+    console.log(match[i]);
+    const idfitch = await fetch(
+      `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${match[i]}`
+    );
+    const response = await idfitch.json();
+    result.push(response.meals[0]);
   }
+  pages(result);
+  button(result);
+  displayPage(0, result);
 });
 
 /**
@@ -233,15 +253,14 @@ buttonfilter.addEventListener("click", async function () {
   area.meals.forEach((element) => {
     areaid.push(element.idMeal);
   });
-  let intersection = areaid.filter(function (e) {
+  let match = areaid.filter(function (e) {
     return catid.indexOf(e) > -1;
   });
-  console.log(intersection);
   let result = [];
-  for (let i = 0; i < intersection.length; i++) {
-    console.log(intersection[i]);
+  for (let i = 0; i < match.length; i++) {
+    console.log(match[i]);
     const idfitch = await fetch(
-      `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${intersection[i]}`
+      `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${match[i]}`
     );
     const response = await idfitch.json();
     result.push(response.meals[0]);
