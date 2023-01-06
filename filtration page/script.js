@@ -76,7 +76,7 @@ window.addEventListener("DOMContentLoaded", async function () {
     lambid.push(element.idMeal);
   });
   const morocco = await fetch(
-    `https://www.themealdb.com/api/json/v1/1/filter.php?c=Lamb`
+    `https://www.themealdb.com/api/json/v1/1/filter.php?a=Moroccan`
   );
   const resultmor = await morocco.json();
   resultmor.meals.forEach((element) => {
@@ -87,7 +87,6 @@ window.addEventListener("DOMContentLoaded", async function () {
   });
   let result = [];
   for (let i = 0; i < match.length; i++) {
-    console.log(match[i]);
     const idfitch = await fetch(
       `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${match[i]}`
     );
@@ -235,8 +234,13 @@ function displayPage(pageNum, items) {
 
 let buttonfilter = document.getElementById("filter");
 
+const allcondition = Category.value == "allCategory" && Area.value == "allArea";
+const allandone = (!allcondition && Category.value) || Area.value;
+
 buttonfilter.addEventListener("click", async function () {
   showresult.innerHTML = "";
+  if (allcondition) {
+  }
   let catid = [];
   let areaid = [];
   const response1 = await fetch(
@@ -258,7 +262,6 @@ buttonfilter.addEventListener("click", async function () {
   });
   let result = [];
   for (let i = 0; i < match.length; i++) {
-    console.log(match[i]);
     const idfitch = await fetch(
       `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${match[i]}`
     );
@@ -272,10 +275,10 @@ buttonfilter.addEventListener("click", async function () {
   } else {
     let alert = document.getElementById("alert");
     alert.innerHTML = `<div class="alert alert-danger d-flex align-items-center" role="alert">
-  <svg class="bi flex-shrink-0 me-2" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill"/></svg>
-  <div>
-    NO RESULTS
-  </div>
-</div>`;
+	  <svg class="bi flex-shrink-0 me-2" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill"/></svg>
+	  <div>
+	    NO RESULTS
+	  </div>
+	</div>`;
   }
 });
