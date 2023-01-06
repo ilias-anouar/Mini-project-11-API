@@ -238,7 +238,9 @@ const allcondition = Category.value == "allCategory" && Area.value == "allArea";
 const allandone = (!allcondition && Category.value) || Area.value;
 
 buttonfilter.addEventListener("click", async function () {
+  let alert = document.getElementById("alert");
   showresult.innerHTML = "";
+  alert.innerHTML = "";
   if (allcondition) {
   }
   let catid = [];
@@ -273,7 +275,6 @@ buttonfilter.addEventListener("click", async function () {
     button(result);
     displayPage(0, result);
   } else {
-    let alert = document.getElementById("alert");
     alert.innerHTML = `<div class="alert alert-danger d-flex align-items-center" role="alert">
 	  <svg class="bi flex-shrink-0 me-2" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill"/></svg>
 	  <div>
