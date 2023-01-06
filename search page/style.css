@@ -1,7 +1,13 @@
-*{
+* {
     box-sizing: border-box;
     font-family: 'Nunito', sans-serif;
 }
-h1{
+
+h1 {
     font-family: 'Lobster', cursive;
+}
+
+.scrollable {
+    overflow-y: auto;
+    max-height: 300px;
 }
