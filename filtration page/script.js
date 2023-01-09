@@ -241,7 +241,9 @@ buttonfilter.addEventListener("click", async function () {
   if (Category.value == "allCategory" && Area.value == "allArea") {
     all();
   } else if (Category.value == "allCategory" && Area.value != "allArea") {
-    allcat()
+    allcat();
+  } else if (Category.value != "allCategory" && Area.value == "allArea") {
+    allarea()
   } else {
     let catid = [];
     let areaid = [];
@@ -366,12 +368,55 @@ async function allcat() {
   const areafetch = await fetch(
     `https://www.themealdb.com/api/json/v1/1/filter.php?a=${Area.value}`
   );
-  const area = await response2.json();
+  const area = await areafetch.json();
   area.meals.forEach((element) => {
     areaid.push(element.idMeal);
   });
   let match = areaid.filter(function (e) {
     return allcatid.indexOf(e) > -1;
+  });
+  let result = [];
+  for (let i = 0; i < match.length; i++) {
+    const idfitch = await fetch(
+      `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${match[i]}`
+    );
+    const response = await idfitch.json();
+    result.push(response.meals[0]);
+  }
+  pages(result);
+  button(result);
+  displayPage(0, result);
+}
+
+async function allarea() {
+  let allarearesult = [];
+  const allArea = await fetch(
+    `https://www.themealdb.com/api/json/v1/1/list.php?a=list`
+  );
+  const allarearesponse = await allArea.json();
+  allarearesponse.meals.forEach((response) =>
+    allarearesult.push(response.strArea)
+  );
+  // fetch all areas id
+  let allAreaid = [];
+  for (let j = 0; j < allarearesult.length; j++) {
+    let allArea = await fetch(
+      `https://www.themealdb.com/api/json/v1/1/filter.php?a=${allarearesult[j]}`
+    );
+    let result = await allArea.json();
+    result.meals.forEach((meal) => allAreaid.push(meal.idMeal));
+  }
+  let catid = [];
+  const catefetch = await fetch(
+    `https://www.themealdb.com/api/json/v1/1/filter.php?c=${Category.value}`
+  );
+  const category = await catefetch.json();
+  category.meals.forEach((element) => {
+    catid.push(element.idMeal);
+  });
+
+  let match = allAreaid.filter(function (e) {
+    return catid.indexOf(e) > -1;
   });
   let result = [];
   for (let i = 0; i < match.length; i++) {
