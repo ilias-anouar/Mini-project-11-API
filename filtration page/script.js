@@ -240,6 +240,8 @@ buttonfilter.addEventListener("click", async function () {
   alert.innerHTML = "";
   if (Category.value == "allCategory" && Area.value == "allArea") {
     all();
+  } else if (Category.value == "allCategory" && Area.value != "allArea") {
+    allcat()
   } else {
     let catid = [];
     let areaid = [];
@@ -326,6 +328,49 @@ async function all() {
     result.meals.forEach((meal) => allAreaid.push(meal.idMeal));
   }
   let match = allAreaid.filter(function (e) {
+    return allcatid.indexOf(e) > -1;
+  });
+  let result = [];
+  for (let i = 0; i < match.length; i++) {
+    const idfitch = await fetch(
+      `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${match[i]}`
+    );
+    const response = await idfitch.json();
+    result.push(response.meals[0]);
+  }
+  pages(result);
+  button(result);
+  displayPage(0, result);
+}
+
+async function allcat() {
+  let allcatresult = [];
+  const allcat = await fetch(
+    `https://www.themealdb.com/api/json/v1/1/list.php?c=list`
+  );
+  const allrespons = await allcat.json();
+  console.log(allrespons);
+  allrespons.meals.forEach((response) =>
+    allcatresult.push(response.strCategory)
+  );
+  // fetch in all category
+  let allcatid = [];
+  for (let i = 0; i < allcatresult.length; i++) {
+    let allcategory = await fetch(
+      `https://www.themealdb.com/api/json/v1/1/filter.php?c=${allcatresult[i]}`
+    );
+    let result = await allcategory.json();
+    result.meals.forEach((meal) => allcatid.push(meal.idMeal));
+  }
+  let areaid = [];
+  const areafetch = await fetch(
+    `https://www.themealdb.com/api/json/v1/1/filter.php?a=${Area.value}`
+  );
+  const area = await response2.json();
+  area.meals.forEach((element) => {
+    areaid.push(element.idMeal);
+  });
+  let match = areaid.filter(function (e) {
     return allcatid.indexOf(e) > -1;
   });
   let result = [];
