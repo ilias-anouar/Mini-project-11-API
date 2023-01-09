@@ -243,7 +243,7 @@ buttonfilter.addEventListener("click", async function () {
   } else if (Category.value == "allCategory" && Area.value != "allArea") {
     allcat();
   } else if (Category.value != "allCategory" && Area.value == "allArea") {
-    allarea()
+    allarea();
   } else {
     let catid = [];
     let areaid = [];
@@ -298,11 +298,9 @@ async function all() {
     `https://www.themealdb.com/api/json/v1/1/list.php?c=list`
   );
   const allrespons = await allcat.json();
-  console.log(allrespons);
   allrespons.meals.forEach((response) =>
     allcatresult.push(response.strCategory)
   );
-  console.log(allcatresult);
   let allarearesult = [];
   const allArea = await fetch(
     `https://www.themealdb.com/api/json/v1/1/list.php?a=list`
@@ -311,7 +309,6 @@ async function all() {
   allarearesponse.meals.forEach((response) =>
     allarearesult.push(response.strArea)
   );
-  console.log(allarearesult);
   // fetch in all category
   let allcatid = [];
   for (let i = 0; i < allcatresult.length; i++) {
