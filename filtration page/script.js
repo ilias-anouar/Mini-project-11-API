@@ -301,14 +301,6 @@ async function all() {
   allrespons.meals.forEach((response) =>
     allcatresult.push(response.strCategory)
   );
-  let allarearesult = [];
-  const allArea = await fetch(
-    `https://www.themealdb.com/api/json/v1/1/list.php?a=list`
-  );
-  const allarearesponse = await allArea.json();
-  allarearesponse.meals.forEach((response) =>
-    allarearesult.push(response.strArea)
-  );
   // fetch in all category
   let allcatid = [];
   for (let i = 0; i < allcatresult.length; i++) {
@@ -318,21 +310,10 @@ async function all() {
     let result = await allcategory.json();
     result.meals.forEach((meal) => allcatid.push(meal.idMeal));
   }
-  let allAreaid = [];
-  for (let j = 0; j < allarearesult.length; j++) {
-    let allArea = await fetch(
-      `https://www.themealdb.com/api/json/v1/1/filter.php?a=${allarearesult[j]}`
-    );
-    let result = await allArea.json();
-    result.meals.forEach((meal) => allAreaid.push(meal.idMeal));
-  }
-  let match = allAreaid.filter(function (e) {
-    return allcatid.indexOf(e) > -1;
-  });
   let result = [];
-  for (let i = 0; i < match.length; i++) {
+  for (let i = 0; i < allcatid.length; i++) {
     const idfitch = await fetch(
-      `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${match[i]}`
+      `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${allcatid[i]}`
     );
     const response = await idfitch.json();
     result.push(response.meals[0]);
