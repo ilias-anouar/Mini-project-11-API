@@ -234,33 +234,99 @@ function displayPage(pageNum, items) {
 
 let buttonfilter = document.getElementById("filter");
 
-const allcondition = Category.value == "allCategory" && Area.value == "allArea";
-const allandone = (!allcondition && Category.value) || Area.value;
-
 buttonfilter.addEventListener("click", async function () {
   let alert = document.getElementById("alert");
   showresult.innerHTML = "";
   alert.innerHTML = "";
-  if (allcondition) {
+  if (Category.value == "allCategory" && Area.value == "allArea") {
+    all();
+  } else {
+    let catid = [];
+    let areaid = [];
+    const response1 = await fetch(
+      `https://www.themealdb.com/api/json/v1/1/filter.php?c=${Category.value}`
+    );
+    const category = await response1.json();
+    category.meals.forEach((element) => {
+      catid.push(element.idMeal);
+    });
+    const response2 = await fetch(
+      `https://www.themealdb.com/api/json/v1/1/filter.php?a=${Area.value}`
+    );
+    const area = await response2.json();
+    area.meals.forEach((element) => {
+      areaid.push(element.idMeal);
+    });
+    let match = areaid.filter(function (e) {
+      return catid.indexOf(e) > -1;
+    });
+    let result = [];
+    for (let i = 0; i < match.length; i++) {
+      const idfitch = await fetch(
+        `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${match[i]}`
+      );
+      const response = await idfitch.json();
+      result.push(response.meals[0]);
+    }
+    if (result.length >= 1) {
+      pages(result);
+      button(result);
+      displayPage(0, result);
+    } else {
+      alert.innerHTML = `<div class="alert alert-danger d-flex align-items-center" role="alert">
+	  <svg class="bi flex-shrink-0 me-2" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill"/></svg>
+	  <div>
+	    NO RESULTS
+	  </div>
+	</div>`;
+    }
   }
-  let catid = [];
-  let areaid = [];
-  const response1 = await fetch(
-    `https://www.themealdb.com/api/json/v1/1/filter.php?c=${Category.value}`
+});
+
+/**
+ * for all category :
+ * * function to get and filter category.
+ */
+
+async function all() {
+  let allcatresult = [];
+  const allcat = await fetch(
+    `https://www.themealdb.com/api/json/v1/1/list.php?c=list`
   );
-  const category = await response1.json();
-  category.meals.forEach((element) => {
-    catid.push(element.idMeal);
-  });
-  const response2 = await fetch(
-    `https://www.themealdb.com/api/json/v1/1/filter.php?a=${Area.value}`
+  const allrespons = await allcat.json();
+  console.log(allrespons);
+  allrespons.meals.forEach((response) =>
+    allcatresult.push(response.strCategory)
   );
-  const area = await response2.json();
-  area.meals.forEach((element) => {
-    areaid.push(element.idMeal);
-  });
-  let match = areaid.filter(function (e) {
-    return catid.indexOf(e) > -1;
+  console.log(allcatresult);
+  let allarearesult = [];
+  const allArea = await fetch(
+    `https://www.themealdb.com/api/json/v1/1/list.php?a=list`
+  );
+  const allarearesponse = await allArea.json();
+  allarearesponse.meals.forEach((response) =>
+    allarearesult.push(response.strArea)
+  );
+  console.log(allarearesult);
+  // fetch in all category
+  let allcatid = [];
+  for (let i = 0; i < allcatresult.length; i++) {
+    let allcategory = await fetch(
+      `https://www.themealdb.com/api/json/v1/1/filter.php?c=${allcatresult[i]}`
+    );
+    let result = await allcategory.json();
+    result.meals.forEach((meal) => allcatid.push(meal.idMeal));
+  }
+  let allAreaid = [];
+  for (let j = 0; j < allarearesult.length; j++) {
+    let allArea = await fetch(
+      `https://www.themealdb.com/api/json/v1/1/filter.php?a=${allarearesult[j]}`
+    );
+    let result = await allArea.json();
+    result.meals.forEach((meal) => allAreaid.push(meal.idMeal));
+  }
+  let match = allAreaid.filter(function (e) {
+    return allcatid.indexOf(e) > -1;
   });
   let result = [];
   for (let i = 0; i < match.length; i++) {
@@ -270,16 +336,7 @@ buttonfilter.addEventListener("click", async function () {
     const response = await idfitch.json();
     result.push(response.meals[0]);
   }
-  if (result.length >= 1) {
-    pages(result);
-    button(result);
-    displayPage(0, result);
-  } else {
-    alert.innerHTML = `<div class="alert alert-danger d-flex align-items-center" role="alert">
-	  <svg class="bi flex-shrink-0 me-2" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill"/></svg>
-	  <div>
-	    NO RESULTS
-	  </div>
-	</div>`;
-  }
-});
+  pages(result);
+  button(result);
+  displayPage(0, result);
+}
