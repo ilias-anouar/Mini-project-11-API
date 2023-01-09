@@ -180,7 +180,7 @@ function pages(items) {
 // Create the buttons or links for each page
 function button(items) {
   let nav = document.getElementById("pagin-num");
-  nav.innerHTML = ""
+  nav.innerHTML = "";
   for (let i = 0; i < pagenum(items); i++) {
     const li = document.createElement("li");
     li.setAttribute("class", "page-item");
@@ -213,6 +213,8 @@ function displayPage(pageNum, items) {
   }
 }
 
+let alertholder = document.getElementById("alert");
+
 buttonsearch.addEventListener("click", function () {
   recipesgroup.innerHTML = "";
 
@@ -229,7 +231,17 @@ buttonsearch.addEventListener("click", function () {
 });
 
 function search(json) {
-  pages(json);
-  button(json);
-  displayPage(0, json);
+  alertholder.innerHTML = ""
+  if (json == null) {
+    alertholder.innerHTML = `<div class="alert alert-danger d-flex align-items-center" role="alert">
+	  <svg class="bi flex-shrink-0 me-2" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill"/></svg>
+	  <div>
+	    NO RESULTS
+	  </div>
+	</div>`;
+  } else {
+    pages(json);
+    button(json);
+    displayPage(0, json);
+  }
 }

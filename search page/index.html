@@ -24,7 +24,8 @@
     <section class="card">
         <img src="IMG/imag.jpg" class="card-img w-100" alt="section img">
         <div class="card-img-overlay m-5">
-            <a type="button" href="/filtration page/filter.html" class="btn btn-lg btn-outline-warning border-5 display-1 fw-bolder">Filtration</a>
+            <a type="button" href="/filtration page/filter.html"
+                class="btn btn-lg btn-outline-warning border-5 display-1 fw-bolder">Filtration</a>
             <h1 class="card-title display-1 text-center text-black fw-bolder pb-5">Cooking recipes</h1>
             <div class="input-group input-group-lg ps-5 pe-5">
                 <button id="buttonsearch" type="button" class="btn btn-lg btn-warning"><i
@@ -35,6 +36,7 @@
         </div>
     </section>
     <section id="recipes" class="p-5">
+        <div id="alert"></div>
         <ul class="pagination" id="pagin-num"></ul>
         <div id="recipes-group" class="row row-cols-1 row-cols-md-3 g-4"></div>
     </section>
@@ -47,7 +49,7 @@
                             <img id="img-modal" src="#" class="img-fluid rounded-start" alt="image detels">
                         </div>
                         <div class="col-md-8 p-2">
-                            <div class="card-body">
+                            <div class="card-body scrollable">
                                 <h5 id="rec-title" class="card-title"></h5>
                                 <p id="rec-cat-reg" class="card-text"></p>
                                 <h5>Ingredients</h5>
