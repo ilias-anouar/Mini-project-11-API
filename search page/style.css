@@ -14,17 +14,20 @@ h1 {
     overflow-y: auto;
     max-height: 300px;
 }
+
 ::-webkit-scrollbar {
     width: 15px;
 }
 
 /* Track */
 ::-webkit-scrollbar-track {
+    border-radius: 2em;
     background: #f1f1f1;
 }
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
+    border-radius: 2em;
     background: rgb(255, 208, 0);
 }
 
