@@ -1,6 +1,9 @@
 * {
     box-sizing: border-box;
     font-family: 'Nunito', sans-serif;
+    scroll-behavior: smooth;
+    transition: ease;
+    transition-duration: 0.3s;
 }
 
 h1 {
@@ -10,4 +13,22 @@ h1 {
 .scrollable {
     overflow-y: auto;
     max-height: 300px;
+}
+::-webkit-scrollbar {
+    width: 15px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: rgb(255, 208, 0);
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: rgb(255, 238, 0);
 }
